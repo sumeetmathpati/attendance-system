@@ -1,0 +1,40 @@
+{% extends 'attendance_manager/base.html' %}
+{% load widget_tweaks %}
+{% block content %}
+<form class="w3-container w3-margin w3-border w3-round" method="POST" action="">
+    <h1>Login</h1>
+    <hr>
+    {% csrf_token %}
+    <p>
+        <label class="w3-text-blue-grey"><b>{{ form.username.label }}</b></label>
+
+        {% if form.username.errors %}
+        {% for error in form.username.errors %}
+    <p class="w3-text-red">{{ error }}</p>
+    {% endfor %}
+    {% endif %}
+
+    {% render_field form.username class+="w3-input w3-border w3-round" %}
+    </p>
+    <p>
+        <label class="w3-text-blue-grey"><b>{{ form.email.label }}</b></label>
+        {% render_field form.email class+="w3-input w3-border w3-round" %}
+    </p>
+    <p>
+        <label class="w3-text-blue-grey"><b>{{ form.password.label }}</b></label>
+        {% render_field form.password class+="w3-input w3-border w3-round" %}
+    </p>
+    {% for error in form.non_field_errors %}
+    <p class="w3-text-red">{{ error }}</p>
+    {% endfor %}
+    <p>
+        <button class="w3-btn w3-blue-grey w3-round" type="submit">Login</button>
+    </p>
+
+    <a href="{% url 'register' %}">
+        <p>Don't have an account? Sign up</p>
+    </a>
+
+    </a>
+</form>
+{% endblock %}
