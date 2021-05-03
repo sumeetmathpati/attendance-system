@@ -61,28 +61,11 @@ def my_scheduled_job():
     mac_list = []
     for i in range(1, 255):
         request_mac = arpreq.arpreq(f'192.168.0.{i}')
-        # print(f'192.168.0.{i} ' + str(request_mac))
-        # mac_list.append(str(request_mac))
-
-        
         if request_mac:
-            # f = open("/home/sumeet/record.txt", "a")
-            # f.write(str(request_mac)+'\n')
-
             Record.objects.filter(present_time__lt=datetime.now()-timedelta(minutes=1)).delete()
             student_with_mac = Student.objects.filter(mac=str(request_mac).strip())
             if student_with_mac.exists():
-                # f.write(str(student_with_mac)+'\n')
                 record = Record(student=student_with_mac.first())
                 record.save() 
 
-            # f.close()
     
-
-
-    # for mac in mac_list:
-    #     f.write(str(mac))
-    #     f.write('\n------------\n')
-    #     student_with_mac = Student.objects.filter(mac=str(mac))
-    #     record = Record(student=student_with_mac.first())
-    #     record.save()
