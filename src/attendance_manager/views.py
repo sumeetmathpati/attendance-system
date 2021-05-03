@@ -62,7 +62,7 @@ def my_scheduled_job():
     for i in range(1, 255):
         request_mac = arpreq.arpreq(f'192.168.0.{i}')
         if request_mac:
-            Record.objects.filter(present_time__lt=datetime.now()-timedelta(minutes=1)).delete()
+            Record.objects.filter(present_time__lt=datetime.now()-timedelta(days=5)).delete()
             student_with_mac = Student.objects.filter(mac=str(request_mac).strip())
             if student_with_mac.exists():
                 record = Record(student=student_with_mac.first())
