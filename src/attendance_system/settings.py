@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import env
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -82,8 +82,14 @@ WSGI_APPLICATION = 'attendance_system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': env.DB,
+        'USER': env.USER,
+        'PASSWORD': env.PASSWORD,
+        'HOST': env.HOST,
+        'PORT': env.PORT,
     }
 }
 
@@ -129,5 +135,6 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'index'
 
 CRONJOBS = [
-    ('* * * * *', 'attendance_manager.views.my_scheduled_job')
+    ('15 * * * *', 'attendance_manager.views.get_attendance'),
+    ('59 23 * * *', 'attendance_manager.views.delete_old_records')
 ]
