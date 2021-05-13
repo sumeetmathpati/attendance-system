@@ -3,22 +3,7 @@
 {% block content %}
 
 {% if form %}
-<form class="w3-container w3-margin w3-border w3-round" method="POST" action="">
-    <h1>Take Attendance</h1>
-    <hr>
-    {% csrf_token %}
-
-    <strong>{{ user.email }}</strong>    
-
-    {{ form.as_p }}
-    <p>
-        {{ form.submit }}
-    </p>
-    <p>
-        <input class="w3-btn w3-blue-grey" type="submit" value="Submit">
-    </p>
-
-    <hr>
+<div class="w3-container w3-margin w3-border w3-round">
 
     {% if records %}
 
@@ -50,8 +35,7 @@
 
     {% endif %}
 
-
-</form>
+</div>
 
 <script>
 function exportTableToExcel(tableID, filename = ''){

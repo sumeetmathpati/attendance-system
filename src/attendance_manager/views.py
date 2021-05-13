@@ -11,6 +11,11 @@ from datetime import datetime, timedelta
 
 def index(request):
     context = {}
+
+    if request.user.is_authenticated:
+        form = TakeAttendance()
+        context['form'] = form
+
     if request.method == 'POST':
 
         if request.user.is_authenticated:
@@ -28,11 +33,14 @@ def index(request):
 
                 if records:
                     print(records)
-                return redirect('index')
-    else:
-        if request.user.is_authenticated:
-            form = TakeAttendance()
-            context['form'] = form
+                    context['records'] = records
+                    context['from'] = from_date.strftime('%d/%m/%Y %I:%M %p')
+                    context['to'] = to_date.strftime('%d/%m/%Y %I:%M %p')
+                    context['class'] = class_name
+                    # return render(request, 'attendance_manager/index.html', context)
+                    return render(request, 'attendance_manager/index.html', context) 
+
+            return render(request, 'attendance_manager/index.html', context)        
 
     return render(request, 'attendance_manager/index.html', context)
 
